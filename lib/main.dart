@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/to_do_list_screen.dart';
 
 void main() {
-  runApp(TodoApp());
+  runApp(const TodoApp());
 }
 
 class TodoApp extends StatelessWidget {
