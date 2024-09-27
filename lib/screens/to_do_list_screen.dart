@@ -16,13 +16,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void initState() {
     super.initState();
-    // _loadTasks();
   }
-
-  // _loadTasks() async {
-  //   // Simulation du chargement des tâches depuis une source persistante
-  //   // SharedPreferences ou une base de données peuvent être utilisés pour sauvegarder les tâches
-  // }
 
   _addTask(Task task) {
     setState(() {
@@ -32,7 +26,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   _toggleTaskCompletion(int index) {
     setState(() {
-      _tasks[index].isCompleted = !_tasks[index].isCompleted; // Inverser l'état
+      _tasks[index].isCompleted = !_tasks[index].isCompleted;
     });
   }
 
@@ -50,22 +44,112 @@ class _TodoListScreenState extends State<TodoListScreen> {
         itemBuilder: (context, index) {
           final task = _tasks[index];
           return Card(
-            child: ListTile(
-              leading: Checkbox(
-                value: task.isCompleted, 
-                onChanged: (value) {
-                  _toggleTaskCompletion(index); 
-                },
-              ),
-              title: Text(
-                task.title,
-                style: TextStyle(
-                  decoration: task.isCompleted ? TextDecoration.lineThrough : null,
-                  color: task.isCompleted ? Colors.grey : null,
-                ),
-              ),
-              subtitle: Text(
-                'Début: ${task.startDate.toLocal().toString().split(' ')[0]} - Fin: ${task.endDate.toLocal().toString().split(' ')[0]}',
+            child: Container(
+              padding: const EdgeInsets.all(10.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Afficher une photo si elle est ajoutée, sinon un avatar par défaut
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundImage: task.image != null 
+                        ? FileImage(task.image!) 
+                        : const AssetImage('assets/default_avatar.png') as ImageProvider,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        
+                        Text(
+                          task.title,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            decoration: task.isCompleted
+                                ? TextDecoration.lineThrough
+                                : null,
+                            color: task.isCompleted ? Colors.grey : Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 5),
+                        // Date et heure de début de la tâche avec une icône d'alarme
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.alarm,
+                              color: Colors.grey,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              'Début: ${task.startDate.toLocal().toString().split(' ')[0]}',
+                              style: const TextStyle(color: Colors.black54),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'à ${TimeOfDay.fromDateTime(task.startDate).format(context)}', // Affichage de l'heure
+                              style: const TextStyle(color: Colors.black54),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 5),
+                        
+                        Text(
+                          'Fin: ${task.endDate.toLocal().toString().split(' ')[0]}',
+                          style: const TextStyle(color: Colors.black54),
+                        ),
+                        const SizedBox(height: 5),
+                        // Description de la tâche (si nécessaire)
+                        if (task.description.isNotEmpty)
+                          Text(
+                            task.description,
+                            style: const TextStyle(color: Colors.black87),
+                          ),
+                        const SizedBox(height: 10),
+                        // Ligne des icônes pour les actions
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              icon: Icon(
+                                task.isCompleted
+                                    ? Icons.check_circle
+                                    : Icons.circle_outlined,
+                                color: task.isCompleted ? Colors.green : Colors.grey,
+                              ),
+                              onPressed: () => _toggleTaskCompletion(index),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.photo),
+                              onPressed: () {
+                                // Action pour la photo
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.attach_file),
+                              onPressed: () {
+                                // Action pour le fichier
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.location_on),
+                              onPressed: () {
+                                // Action pour la localisation
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.mic),
+                              onPressed: () {
+                                // Action pour l'audio
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           );

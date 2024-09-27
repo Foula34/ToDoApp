@@ -1,13 +1,23 @@
+import 'dart:io';
+
 class Task {
   String title;
+  String description;
   DateTime startDate;
   DateTime endDate;
-  bool isCompleted; // Déclaration de la propriété isCompleted
+  File? image;
+  bool isCompleted;
+  double? latitude;  // Coordonnée latitude
+  double? longitude; // Coordonnée longitude
 
   Task({
     required this.title,
+    required this.description,
     required this.startDate,
     required this.endDate,
-    this.isCompleted = false, required String description, // Initialisation par défaut
+    this.image,
+    this.isCompleted = false,
+    this.latitude,
+    this.longitude, String? location,
   });
 }
