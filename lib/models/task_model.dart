@@ -7,8 +7,8 @@ class Task {
   DateTime endDate;
   File? image;
   bool isCompleted;
-  double? latitude;  // Coordonnée latitude
-  double? longitude; // Coordonnée longitude
+  double? latitude;  
+  double? longitude; 
 
   Task({
     required this.title,
