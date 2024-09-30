@@ -139,7 +139,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           ),
           endDate: _endDate!,
           image: _selectedImage, // Ajouter l'image à la tâche
-          location: _location, // Ajouter la localisation à la tâche
+          // Ajouter la localisation à la tâche
         );
         Navigator.pop(context, newTask);
       } else {

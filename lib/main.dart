@@ -17,7 +17,7 @@ class TodoApp extends StatelessWidget {
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
       
-      home: const TodoListScreen(),
+      home:  TodoListScreen(),
     );
   }
 }
